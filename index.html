@@ -145,6 +145,35 @@
             min-height:120px; display:flex; align-items:center; justify-content:center;
         }
 
+        /* === 经历卡片（含乒乓球） === */
+        .exp-item {
+            display:flex; align-items:center; gap:16px;
+            padding:16px 20px;
+            background:var(--card-bg);
+            border-radius:var(--radius);
+            border:1px solid var(--border);
+            box-shadow:var(--shadow);
+            transition:0.25s;
+            margin-bottom:12px;
+        }
+        .exp-item:hover { transform:translateX(6px); box-shadow:0 8px 28px rgba(0,0,0,0.10); }
+        .exp-item .exp-icon {
+            font-size:2rem; width:48px; text-align:center;
+            flex-shrink:0;
+        }
+        .exp-item .exp-content { flex:1; }
+        .exp-item .exp-title { font-weight:600; font-size:1rem; color:var(--text-primary); }
+        .exp-item .exp-desc { font-size:0.88rem; color:var(--text-secondary); }
+        .exp-item .exp-tag {
+            font-size:0.7rem; background:var(--accent); color:#fff;
+            padding:0 12px; border-radius:20px; line-height:1.8;
+            display:inline-block; margin-left:8px;
+        }
+        .exp-item .exp-date {
+            font-size:0.78rem; color:var(--text-muted);
+            white-space:nowrap; flex-shrink:0;
+        }
+
         /* === 占位 === */
         .placeholder-box {
             background:var(--card-bg); border-radius:var(--radius);
@@ -198,7 +227,6 @@
         .cert-card .label .badge { font-size:0.65rem; background:var(--accent); color:#fff; padding:0 10px; border-radius:20px; line-height:1.8; }
         .cert-card img { width:100%; border-radius:8px; border:1px solid var(--border); margin-top:10px; }
         .cert-card .err { padding:16px; background:var(--bg-start); border-radius:8px; border:1px dashed var(--border); color:var(--text-muted); text-align:center; font-size:0.82rem; margin-top:10px; }
-        .cert-card .hint { font-size:0.72rem; color:var(--text-muted); background:var(--bg-start); padding:2px 12px; border-radius:12px; display:inline-block; margin-top:6px; }
 
         .open-cert-btn {
             margin-top:14px; padding:8px 22px; background:var(--primary); color:#fff;
@@ -227,6 +255,8 @@
             .skills-grid { grid-template-columns:1fr; }
             .cert-grid { grid-template-columns:1fr; }
             #certPage { padding:70px 16px 30px; }
+            .exp-item { flex-wrap:wrap; }
+            .exp-item .exp-date { width:100%; margin-left:48px; }
         }
         @media (max-width:640px) {
             #navbar .nav-links { display:none; flex-direction:column; position:absolute; top:68px; left:0; right:0; background:rgba(30,58,95,0.97); padding:16px; gap:4px; }
@@ -252,6 +282,8 @@
             .glass { background:#fff !important; backdrop-filter:none !important; border-color:#ddd !important; box-shadow:none !important; }
             .glass:hover { transform:none !important; box-shadow:none !important; }
             .open-cert-btn { display:none !important; }
+            .exp-item { background:#fff !important; border-color:#ddd !important; box-shadow:none !important; }
+            .exp-item:hover { transform:none !important; box-shadow:none !important; }
             [data-theme] { --card-bg:#fff !important; --border:#ddd !important; --text-primary:#000 !important; }
         }
     </style>
@@ -338,8 +370,20 @@ const resume = {
         { name: '青少年机器人技术等级考试二级', date: '2019.12', img: '青少年机器人证书.jpg' },
         { name: '阿里云Apsara Clouder专项技能认证 - 基于百炼平台构建智能体应用', date: '2026.08', img: '阿里云Apsara Clouder专项技能认证基于百炼平台构建智能体应用_new.png' },
         { name: '阿里云Apsara Clouder专项技能认证 - 基于通义灵码实现高效AI编码实践', date: '2026.08', img: '阿里云Apsara Clouder专项技能认证基于通义灵码实现高效AI编码实践_new.png' },
+        { name: '勤美之星', date: '2024.06', img: '勤美之星.jpg' },
+        { name: '学习标兵', date: '2024.01', img: '学习标兵.jpg' },
         { name: '高中英语写作大赛决赛二等奖', date: '2025.12', img: '' },
         { name: '全国英语听说能力测评二级A', date: '2022.03', img: '' }
+    ],
+    // 经历列表（含乒乓球）
+    experiences: [
+        {
+            icon: '🏓',
+            title: '学校乒乓球比赛',
+            desc: '打入16强',
+            date: '2025年',
+            tag: '体育'
+        }
     ]
 };
 
@@ -370,11 +414,20 @@ function render() {
     </section>
     `;
 
-    // 经历
+    // 经历（含乒乓球，已删除多余的描述文字）
     html += `
     <section id="experience">
       <div class="section-title">💼 经历</div>
-      <div class="placeholder-box"><span class="emoji">📖</span>正在努力学习中 · 打好专业基础，积极学习编程、三维建模与人工智能知识。</div>
+      ${resume.experiences.map(exp => `
+        <div class="exp-item">
+          <div class="exp-icon">${exp.icon}</div>
+          <div class="exp-content">
+            <div class="exp-title">${exp.title} <span class="exp-tag">${exp.tag}</span></div>
+            <div class="exp-desc">${exp.desc}</div>
+          </div>
+          <div class="exp-date">${exp.date}</div>
+        </div>
+      `).join('')}
     </section>
     `;
 
@@ -443,7 +496,7 @@ function renderCertPage() {
             <div class="label">${c.name} <span class="badge">${c.date}</span></div>
             ${hasImg ? `
               <img src="${c.img}" alt="${c.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-              <div class="err" style="display:none;">⚠️ 图片「${c.img}」未找到</div>
+              <div class="err" style="display:none;">⚠️ 图片「${c.img}」未找到，请确认文件已放在同目录下</div>
             ` : `
               <div class="err">📄 无证书图片</div>
             `}
