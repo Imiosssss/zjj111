@@ -145,7 +145,7 @@
             min-height:120px; display:flex; align-items:center; justify-content:center;
         }
 
-        /* === 经历卡片（含乒乓球） === */
+        /* === 经历卡片 === */
         .exp-item {
             display:flex; align-items:center; gap:16px;
             padding:16px 20px;
@@ -332,8 +332,8 @@ const resume = {
     phone: '15180863507',
     qq: '3324140177',
     email: '3324140177@qq.com',
-    address: '湖北·武汉（即将入学）',
-    summary: '准大一新生，常打乒乓球、踢足球（虽然技术不太好），喜欢阅读小说，希望能结识到更多的同伴。',
+    address: '湖北·武汉',
+    summary: '大一新生，常打乒乓球、踢足球（虽然技术不太好），喜欢阅读小说，希望能结识到更多的同伴。',
     tags: ['Python', 'Pandas', 'Requests', 'BeautifulSoup', '3DMAX', 'ZBrush', 'Photoshop', 'PPT设计', '英语二级A'],
     skills: {
         '编程与开发': [
@@ -375,7 +375,6 @@ const resume = {
         { name: '高中英语写作大赛决赛二等奖', date: '2025.12', img: '' },
         { name: '全国英语听说能力测评二级A', date: '2022.03', img: '' }
     ],
-    // 经历列表（含乒乓球）
     experiences: [
         {
             icon: '🏓',
@@ -383,6 +382,13 @@ const resume = {
             desc: '打入16强',
             date: '2025年',
             tag: '体育'
+        },
+        {
+            icon: '🤝',
+            title: '代表学校与培侨中学学子交流',
+            desc: '参与校际交流活动，与培侨中学学子友好互动，拓宽视野、增进友谊',
+            date: '高中时',
+            tag: '交流'
         }
     ]
 };
@@ -400,7 +406,7 @@ function render() {
     <section id="hero">
       <div class="hero-grid">
         <div class="hero-content">
-          <h1>朱嘉俊 <span class="hl">·</span> 准大一</h1>
+          <h1>朱嘉俊 <span class="hl">·</span> 大一</h1>
           <div class="hero-sub">材料科学与工程 · 武汉理工大学</div>
           <p class="hero-desc">${resume.summary}</p>
           <div class="hero-tags">${resume.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
@@ -409,12 +415,12 @@ function render() {
             <button class="btn btn-outline" id="copyEmailBtn">📋 复制邮箱</button>
           </div>
         </div>
-        <div class="hero-placeholder">🌱 准大一 · 保持热爱</div>
+        <div class="hero-placeholder">🌱 大一 · 保持热爱</div>
       </div>
     </section>
     `;
 
-    // 经历（含乒乓球，已删除多余的描述文字）
+    // 经历
     html += `
     <section id="experience">
       <div class="section-title">💼 经历</div>
